@@ -31,6 +31,7 @@ string shift_left(string s, int num_shifts)
     return s;
 }
 
+// TODO bitwise operation
 string XOR(string x, string y)
 {
     string result = "";

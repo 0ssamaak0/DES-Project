@@ -17,14 +17,14 @@ string encrypt(string key, string full_text)
         cout << "text for " << i << " is " << bin2hex(text) << "\n";
 
         // apply perm_choice1 ➡️ DES effective key
-        key = permute(key, perm_1, 56);
+        string key_perm_1 = permute(key, perm_1, 56);
         // apply initial permutation
         text = permute(text, initial_prem, 64);
         // cout << "after initial permutation: " << bin2hex(text) << "\n";
 
         for (int j = 0; j < 16; j++)
         {
-            text = DES_enc_round(j, key, text);
+            text = DES_enc_round(j, key_perm_1, text);
             // cout << "Round 1 " << bin2hex(text) << "\n";
         }
         text = text.substr(32) + text.substr(0, 32);
@@ -43,8 +43,8 @@ int main(void)
     // string a = "10101010101010101010101010101010101010101010101010101010";
     // cout << DES_enc_round(1, a, a);
 
-    string key = "6CA6CB20FF3C485F";
-    string text = "58914751893458BABBABCCDDCCEFE41343144134";
+    string key = "0123456789ABCDEF";
+    string text = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
 
     key = hex2bin(key);
     text = hex2bin(text);
