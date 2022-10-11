@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
 using namespace std;
 string hex2bin(string s)
 {
@@ -140,7 +141,7 @@ string bin2hex(string s)
     return hex;
 }
 
-string decimal2binary(int decimal)
+string decimal2binary(long long decimal)
 {
     string bin = "";
     while (decimal > 0)
@@ -151,18 +152,38 @@ string decimal2binary(int decimal)
     return bin;
 }
 
+long long binary2decimal(string s)
+{
+    long long dec = 0;
+    long long weight = 1;
+    for (int i = s.size() - 1; i >= 0; i--)
+    {
+        dec += (long long)(s[i] - '0') * weight;
+        weight *= 2;
+    }
+    return dec;
+}
+
+// For testing numsys functions only
 // int main(void)
 // {
-//     string s = "0123456789ABCDEF";
-//     string bin = hex2bin(s);
+//     //     string s = "0123456789ABCDEF";
+//     //     string bin = hex2bin(s);
 
-//     cout << bin << "\n";
+//     //     cout << bin << "\n";
 
-//     string hex = bin2hex(bin);
-//     cout << hex << "\n";
+//     //     string hex = bin2hex(bin);
+//     //     cout << hex << "\n";
 
-//     cout << decimal2binary(5) << "\n";
-//     cout << decimal2binary(4) << "\n";
-//     cout << decimal2binary(10) << "\n";
-//     cout << decimal2binary(16) << "\n";
+//     //     cout << decimal2binary(5) << "\n";
+//     //     cout << decimal2binary(4) << "\n";
+//     //     cout << decimal2binary(10) << "\n";
+//     //     cout << decimal2binary(16) << "\n";
+
+//     cout << binary2decimal("0101") << "\n";
+//     cout << binary2decimal("1") << "\n";
+//     cout << binary2decimal("0") << "\n";
+//     cout << binary2decimal("000000") << "\n";
+//     cout << binary2decimal("1100111010011100111") << "\n";
+//     cout << binary2decimal("000010110000001001100111100110110100100110100101") << "\n";
 // }

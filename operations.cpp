@@ -1,4 +1,3 @@
-#include <bits/stdc++.h>
 using namespace std;
 
 string permute(string s, int *per_matrix, int size)
@@ -34,19 +33,36 @@ string shift_left(string s, int num_shifts)
 // TODO bitwise operation
 string XOR(string x, string y)
 {
-    string result = "";
-    for (int i = 0; i < x.size(); i++)
+    long long int_x = binary2decimal(x);
+    long long int_y = binary2decimal(y);
+
+    long long int_xor = int_x ^ int_y;
+    cout << "x: " << x << "\ny: " << y << "\n";
+    cout << "intx: " << int_x << "\ninty: " << int_y << "\n";
+
+    string strxor = decimal2binary(int_xor);
+    cout << "intxor: " << int_xor << "\n";
+    cout << "strxor: " << strxor << "\n";
+
+    while (strxor.size() < x.size())
     {
-        if (x[i] != y[i])
-        {
-            result += "1";
-        }
-        else
-        {
-            result += "0";
-        }
+        strxor = "0" + strxor;
     }
-    return result;
+    return strxor;
+
+    // string result = "";
+    // for (int i = 0; i < x.size(); i++)
+    // {
+    //     if (x[i] != y[i])
+    //     {
+    //         result += "1";
+    //     }
+    //     else
+    //     {
+    //         result += "0";
+    //     }
+    // }
+    // return result;
 }
 
 string DES_enc_round(int round_num, string key, string text)
