@@ -140,13 +140,29 @@ string bin2hex(string s)
     return hex;
 }
 
-int main(void)
+string decimal2binary(int decimal)
 {
-    string s = "0123456789ABCDEF";
-    string bin = hex2bin(s);
-
-    cout << bin << "\n";
-
-    string hex = bin2hex(bin);
-    cout << hex << "\n";
+    string bin = "";
+    while (decimal > 0)
+    {
+        bin = (char)(decimal % 2 + '0') + bin;
+        decimal /= 2;
+    }
+    return bin;
 }
+
+// int main(void)
+// {
+//     string s = "0123456789ABCDEF";
+//     string bin = hex2bin(s);
+
+//     cout << bin << "\n";
+
+//     string hex = bin2hex(bin);
+//     cout << hex << "\n";
+
+//     cout << decimal2binary(5) << "\n";
+//     cout << decimal2binary(4) << "\n";
+//     cout << decimal2binary(10) << "\n";
+//     cout << decimal2binary(16) << "\n";
+// }
