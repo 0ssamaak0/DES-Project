@@ -75,7 +75,6 @@ int main(void)
     string key = "5B0C1DA0F12AF1F2";
     string text = "AC7526025FF6F849";
             
-
     key = hex2bin(key);
     text = hex2bin(text);
     cout << encrypt(key,text) << '\n';
