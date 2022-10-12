@@ -1,5 +1,7 @@
 using namespace std;
 
+string function_outputs[16];
+
 string permute(string s, int *per_matrix, int size)
 {
     string result = "";
@@ -37,12 +39,12 @@ string XOR(string x, string y)
     long long int_y = binary2decimal(y);
 
     long long int_xor = int_x ^ int_y;
-    cout << "x: " << x << "\ny: " << y << "\n";
-    cout << "intx: " << int_x << "\ninty: " << int_y << "\n";
+    //cout << "x: " << x << "\ny: " << y << "\n";
+    //cout << "intx: " << int_x << "\ninty: " << int_y << "\n";
 
     string strxor = decimal2binary(int_xor);
-    cout << "intxor: " << int_xor << "\n";
-    cout << "strxor: " << strxor << "\n";
+    //cout << "intxor: " << int_xor << "\n";
+    //cout << "strxor: " << strxor << "\n";
 
     while (strxor.size() < x.size())
     {
@@ -156,7 +158,27 @@ string DES_enc_round(int round_num, string key, string text)
     string permutation_after_sbox = permute(bin_value, perm, 32);
     // cout << "permuted: " << bin2hex(permutation_after_sbox) << "\n";
 
+    //save the function outputs to be used later in decryption
+    function_outputs[round_num] = permutation_after_sbox;
     string result_right = XOR(text_left, permutation_after_sbox);
+    // cout << "XORING: " << bin2hex(result_right) << "\n";
+
+    string result_text = result_left;
+    result_text += result_right;
+
+    return result_text;
+}
+
+
+string DES_dec_round(int round_num, string key, string text)
+{
+    // Preparing the text
+    string text_left = text.substr(0, 32);
+    string text_right = text.substr(32);
+
+    string result_right = text_left;
+
+    string result_left = XOR(text_right, function_outputs[round_num]);
     // cout << "XORING: " << bin2hex(result_right) << "\n";
 
     string result_text = result_left;
