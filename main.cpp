@@ -76,20 +76,33 @@ string decrypt(string key, string full_text)
     }
     return result;
 }
+string hex_reader(string filename){
+    string line = "";
+    string text = "";
+    int digits;
+    ifstream MyReadFile(filename);
+    while (getline (MyReadFile, line)) {
+    // Output the text from the file
+    //cout << text.substr(1,2);
+    digits = hextodecimal(line.substr(1,2));
+    text += line.substr(9,digits*2);
+    }
+    return text;
+}
 
 int main(void)
 {
     string key = "527558F99B89BCB6";
     string text = "";
+    int digits = 0;
+    string filename = "sample.hex";
+    text = hex_reader(filename);
+    cout << text << endl;
 
-    ifstream myfile;
-    myfile.open("key100k.txt");
-    myfile >> text;
 
-    cout << text << "\n";
 
     // cout << "Original text: " << text << "\n";
-
+/*
     key = hex2bin(key);
     text = hex2bin(text);
 
@@ -108,4 +121,5 @@ int main(void)
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(stop - start);
     cout << duration.count() << endl;
+    */
 }

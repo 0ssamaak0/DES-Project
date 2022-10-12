@@ -181,7 +181,64 @@ long long binary2decimal(string s)
     }
     return dec;
 }
-
+int hextodecimal(string s){
+    int result = 0;
+    int weight = 1;
+    for (int i = (s.size() - 1) ; i >= 0 ; i--)
+    {
+        if (s[i] >= '0' && s[i] <='9')
+        {
+            result += ( (int) (s[i] - '0') * weight);
+        }
+        else
+        {
+        switch (s[i])
+        {
+        case 'a':
+            result += 10 * weight;
+            break;
+        case 'A':
+            result += 10 * weight;
+            break;
+        case 'b':
+            result += 11 * weight;
+            break;
+        case 'B':
+            result += 11 * weight;
+            break;
+        case 'c':
+            result += 12 * weight;
+            break;
+        case 'C':
+            result += 12 * weight;
+            break;
+        case 'd':
+            result += 13 * weight;
+            break;
+        case 'D':
+            result += 13 * weight;
+            break;
+        case 'e':
+            result += 14 * weight;
+            break;
+        case 'E':
+            result += 14 * weight;
+            break;
+        case 'f':
+            result += 15 * weight;
+            break;
+        case 'F':
+            result += 15 * weight;
+            break;
+        default:
+            break;
+        }
+        }
+        weight *= 16;
+    }
+    return result;
+    
+}
 // For testing numsys functions only
 // int main(void)
 // {
