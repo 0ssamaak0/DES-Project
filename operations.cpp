@@ -39,12 +39,12 @@ string XOR(string x, string y)
     long long int_y = binary2decimal(y);
 
     long long int_xor = int_x ^ int_y;
-    //cout << "x: " << x << "\ny: " << y << "\n";
-    //cout << "intx: " << int_x << "\ninty: " << int_y << "\n";
+    // cout << "x: " << x << "\ny: " << y << "\n";
+    // cout << "intx: " << int_x << "\ninty: " << int_y << "\n";
 
     string strxor = decimal2binary(int_xor);
-    //cout << "intxor: " << int_xor << "\n";
-    //cout << "strxor: " << strxor << "\n";
+    // cout << "intxor: " << int_xor << "\n";
+    // cout << "strxor: " << strxor << "\n";
 
     while (strxor.size() < x.size())
     {
@@ -66,46 +66,14 @@ string XOR(string x, string y)
     // }
     // return result;
 }
-
-string DES_enc_round(int round_num, string key, string text)
+string Fesitel_func(string s, string key)
 {
-    // Preparing the key
-    string key_left = key.substr(0, 28);
-    string key_right = key.substr(28);
-
-    // cout << key_left.size() << "\n";
-    // cout << key_right.size() << "\n";
-    int shift = 0;
-    for (int i = 0; i <= round_num; i++)
-    {
-        shift += shift_amt[i];
-    }
-
-    key_left = shift_left(key_left, shift);
-    key_right = shift_left(key_right, shift);
-
-    key = key_left;
-    // cout << "key1: " << key << "\n";
-    key += key_right;
-    // cout << "key2: " << key << "\n";
-
-    // Permutation choice 2
-    string key_perm_2 = permute(key, perm_2, 48);
-
-    // cout << key_perm_2 << "\n";
-
-    // Preparing the text
-    string text_left = text.substr(0, 32);
-    string text_right = text.substr(32);
-
-    string result_left = text_right;
-
-    text_right = permute(text_right, expansion, 48);
+    s = permute(s, expansion, 48);
 
     // cout << bin2hex(text_right) << "\n";
 
     // XOR
-    string XOR1 = XOR(key_perm_2, text_right);
+    string XOR1 = XOR(key, s);
     // cout << "XOR1: " << bin2hex(XOR1) << "\n";
 
     // SBOX
@@ -156,33 +124,69 @@ string DES_enc_round(int round_num, string key, string text)
 
     // Permutation after SBOX
     string permutation_after_sbox = permute(bin_value, perm, 32);
-    // cout << "permuted: " << bin2hex(permutation_after_sbox) << "\n";
 
-    //save the function outputs to be used later in decryption
-    function_outputs[round_num] = permutation_after_sbox;
-    string result_right = XOR(text_left, permutation_after_sbox);
-    // cout << "XORING: " << bin2hex(result_right) << "\n";
+    return permutation_after_sbox;
+}
+
+string key_preparation(string key, int round_num)
+{
+    // Preparing the key
+    string key_left = key.substr(0, 28);
+    string key_right = key.substr(28);
+
+    // cout << key_left.size() << "\n";
+    // cout << key_right.size() << "\n";
+    int shift = 0;
+    for (int i = 0; i <= round_num; i++)
+    {
+        shift += shift_amt[i];
+    }
+
+    key_left = shift_left(key_left, shift);
+    key_right = shift_left(key_right, shift);
+
+    key = key_left;
+    // cout << "key1: " << key << "\n";
+    key += key_right;
+    // cout << "key2: " << key << "\n";
+
+    // Permutation choice 2
+    string key_perm_2 = permute(key, perm_2, 48);
+    return key_perm_2;
+}
+
+string DES_enc_round(int round_num, string key, string text)
+{
+    key = key_preparation(key, round_num);
+    // cout << "Key of Round " << round_num << " is " << bin2hex(key) << "\n";
+
+    // cout << key_perm_2 << "\n";
+
+    // Preparing the text
+    string text_left = text.substr(0, 32);
+    string text_right = text.substr(32);
+
+    string result_left = text_right;
+    string result_right = XOR(text_left, Fesitel_func(text_right, key));
 
     string result_text = result_left;
     result_text += result_right;
 
     return result_text;
 }
-
-
-string DES_dec_round(int round_num, string key, string text)
+string DES_dec_round(int round_num, string key, string cipher)
 {
-    // Preparing the text
-    string text_left = text.substr(0, 32);
-    string text_right = text.substr(32);
+    key = key_preparation(key, round_num);
 
-    string result_right = text_left;
+    // Preparing the cipher
+    string cipher_left = cipher.substr(0, 32);
+    string cipher_right = cipher.substr(32);
 
-    string result_left = XOR(text_right, function_outputs[round_num]);
-    // cout << "XORING: " << bin2hex(result_right) << "\n";
+    string result_right = cipher_left;
+    string result_left = XOR(cipher_right, Fesitel_func(cipher_left, key));
 
-    string result_text = result_left;
-    result_text += result_right;
+    string result_cipher = result_left;
+    result_cipher += result_right;
 
-    return result_text;
+    return result_cipher;
 }

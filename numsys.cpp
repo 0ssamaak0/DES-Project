@@ -56,6 +56,24 @@ string hex2bin(string s)
         case 'F':
             bin += "1111";
             break;
+        case 'a':
+            bin += "1010";
+            break;
+        case 'b':
+            bin += "1011";
+            break;
+        case 'c':
+            bin += "1100";
+            break;
+        case 'd':
+            bin += "1101";
+            break;
+        case 'e':
+            bin += "1110";
+            break;
+        case 'f':
+            bin += "1111";
+            break;
         }
     }
     return bin;

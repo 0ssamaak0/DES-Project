@@ -7,8 +7,9 @@ text = ""
 for i in range(16):
     key += random.choice(hexchars)
 
-for i in range(1000):
-    text += random.choice(hexchars)
+with open ("key100k.txt", "w") as f:
+    for i in range(1000000):
+        f.write(random.choice(hexchars))
 
 print(key)
 print(text)
