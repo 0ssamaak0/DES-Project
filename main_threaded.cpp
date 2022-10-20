@@ -173,7 +173,7 @@ string decrypt(string key, string full_text)
         {
             string text = full_text.substr(64 * i, 64);
             // cout << "text for " << i << " is " << bin2hex(text) << "\n";
-            string block_res = enc_block(key, text, 0);
+            string block_res = dec_block(key, text, 0);
             result += block_res;
         }
     }
