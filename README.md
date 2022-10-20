@@ -5,7 +5,7 @@
 contains all the permutation and expansion, required shift matrices
 
 ## 2. numsys.cpp
-[!image](https://github.com/0ssamaak0/DES-Project/blob/master/numsys.png)
+![numsys](https://github.com/0ssamaak0/DES-Project/blob/master/numsys.png)
 contains function to convert between many systems as following
 
 ## 3.operations.cpp
