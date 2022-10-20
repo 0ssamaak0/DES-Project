@@ -1,7 +1,7 @@
 # DES Encryption / Decryption
 
 # Compiling the program
-the new version of our program is multi_threaded, for compilation
+the new version of our program is Multi-Threaded, for compilation use:
 
 ``` bash
 g++ -pthread -o main_threaded main_threaded.cpp
