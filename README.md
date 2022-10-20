@@ -1,4 +1,14 @@
 # DES Encryption / Decryption
+
+# Compiling the program
+the new version of our program is multi_threaded, for compilation
+
+``` bash
+g++ -pthread -o main_threaded main_threaded.cpp
+```
+
+note: compilation without `pthread` option will result in undefined reference to `pthread_create' error.
+
 # Program Structure
 
 ## 1. constans.cpp
@@ -38,4 +48,18 @@ The main file, in which we handle the I/O operations, and applying the full encr
 [hex_reader](https://github.com/0ssamaak0/DES-Project/blob/9456242a66f37f03913d824bfde76740f07c9390/main_threaded.cpp#L254) reads **file.hex** (it was stated previously that the program should read .hex files)
 
 # Implementation Details
-The first version of the program was single threaded
+## Single-Threaded Version
+The first version of the program was single threaded, such an implementation bottlenecked single thread in a long sequential functions.
+
+![single_threaded](https://github.com/0ssamaak0/DES-Project/blob/master/single_threaded.png)
+
+## Multi-Threaded Version
+In order to push the performance further and increase the utilization, we used 16 threads to perfrom all the operations just after dividing the text into more than 16 threads, from permutations, conversions and the whole ecnryption / decryption process.
+
+The effect of the implementation was a dramatic decrease in required time, specially for CPUs with more cores.
+
+![multi_threaded](https://github.com/0ssamaak0/DES-Project/blob/master/multi_threaded.png)
+
+We made a comparison between both versions
+
+![running_time](https://github.com/0ssamaak0/DES-Project/blob/master/running_time.png)
